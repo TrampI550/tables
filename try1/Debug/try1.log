@@ -1,1 +1,7 @@
-﻿  try1.vcxproj -> C:\Users\tramp\source\repos\try1\Debug\try1.exe
+﻿  baltree.cpp
+C:\Users\tramp\source\repos\try1\try1\baltree.cpp(8,47): error C2664: "int TBalanceTree::InsBalanceTree(PTBalanceNode &,TKey,int *)": невозможно преобразовать аргумент 1 из "PTBalanceNode" в "PTBalanceNode &"
+C:\Users\tramp\source\repos\try1\try1\baltree.h(10,6): message : см. объявление "TBalanceTree::InsBalanceTree"
+C:\Users\tramp\source\repos\try1\try1\baltree.cpp(21,6): error C2664: "int TBalanceTree::InsBalanceTree(PTBalanceNode &,TKey,int *)": невозможно преобразовать аргумент 1 из "PTBalanceNode" в "PTBalanceNode &"
+C:\Users\tramp\source\repos\try1\try1\baltree.cpp(10,19): message : см. объявление "TBalanceTree::InsBalanceTree"
+C:\Users\tramp\source\repos\try1\try1\baltree.cpp(26,6): error C2664: "int TBalanceTree::InsBalanceTree(PTBalanceNode &,TKey,int *)": невозможно преобразовать аргумент 1 из "PTBalanceNode" в "PTBalanceNode &"
+C:\Users\tramp\source\repos\try1\try1\baltree.cpp(10,19): message : см. объявление "TBalanceTree::InsBalanceTree"
