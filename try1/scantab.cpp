@@ -13,9 +13,6 @@ void TScanTable::InsRecord(TKey k, int* pVal)
 {
     if (!IsFull())
     {
-        //pRecs[DataCount] = new TTabRecord;
-        //pRecs[DataCount]->Key = k;
-        //pRecs[DataCount]->pValue = pVal;
         pRecs[DataCount] = new TTabRecord(k, pVal);
         CurrPos = DataCount;
         DataCount++;

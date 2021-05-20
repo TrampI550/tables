@@ -21,9 +21,7 @@ public:
 
 	TTabRecord& operator=(TTabRecord tr)
 	{
-
 		Key = tr.Key; pValue = tr.pValue;
-
 		return *this;
 	}
 

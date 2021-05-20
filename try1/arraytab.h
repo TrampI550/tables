@@ -14,13 +14,16 @@ public:
 	TArrayTable(int Size = TabMaxSize)
 	{
 		pRecs = new PTTabRecord[Size];
-		for (int i = 0; i < Size; i++) pRecs[i] = NULL;
-		TabSize = Size; DataCount = CurrPos = 0;
+		for (int i = 0; i < Size; i++) 
+			pRecs[i] = NULL;
+		TabSize = Size; 
+		DataCount = CurrPos = 0;
 	}
 	~TArrayTable()
 	{
-		//for (int i = 0; i < DataCount; i++)
-		//	delete pRecs[i];
+		for (int i = 0; i < DataCount; i++)
+			if (pRecs[i] != NULL)
+				delete pRecs[i];
 		delete[] pRecs;
 	}
 	PTTabRecord GetpRecs (int n) const
@@ -28,7 +31,7 @@ public:
 		if (n<DataCount)
 			return pRecs[n];
 		return NULL;
-	}//////////////////////////////////////////////////////////////////////////
+	}
 	virtual int IsFull() const { return DataCount >= TabSize; }
 	int GetTabSize() const { return TabSize; }
 	virtual TKey GetKey(void) const { return GetKey(CURRENT_POS); }

@@ -1,5 +1,5 @@
-Sasha Sablin  4  4  5  4  4
-Kostya Rikin  3  4  5  5  3
-Miha Vaneev  4  4  5  4  5
-Alexa Getmans  5  5  5  5  5
-Vasiliy Lodric  3  4  3  3  3
+Sasha Sablin|1|2|3|4|5
+Kostya Rikin|3|4|5|5|3
+Miha Vaneev|4|4|5|4|5
+Alexa Getmans|5|5|5|5|5
+Vasiliy Lodric|3|4|3|3|3

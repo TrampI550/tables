@@ -48,7 +48,6 @@ void TSortTable::InsRecord(TKey k, int* pVal)
 	if (!IsFull())
 	{
 		int* temp = FindRecord(k);
-		std::cout << CurrPos << std::endl;
 		for (int i = DataCount; i > CurrPos; i--)
 			pRecs[i] = pRecs[i - 1];
 		pRecs[CurrPos] = new TTabRecord(k,pVal);
