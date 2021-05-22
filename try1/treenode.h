@@ -15,6 +15,4 @@ public:
 	PTTreeNode GetRight(void) const { return pRight; }
 
 	friend class TTreeTable;
-	friend class TBalanceTree;
-	//////////////////////////////////copy func
 };

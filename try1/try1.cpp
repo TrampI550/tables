@@ -1,4 +1,6 @@
 ﻿#include "sorttab.h"
+#include "treetab.h"
+#include "arrhash.h"
 #include <string>
 #include <sstream>
 #include <fstream>
@@ -6,7 +8,7 @@ typedef std::string Key;
 int** tMark = NULL;
 Key* tKey = NULL;
 int tDataCount = 0, MemSize = 10;
-TScanTable pTab(100);
+TTable *pTab = NULL;
 int TypeGenNumbers()
 {
 	int Type;
@@ -26,6 +28,8 @@ int TypeGenNumbers()
 					return 2;
 				else if (Type == 3)
 					return 3;
+				else if (Type == 4)
+					return 4;
 				else std::cout << "Wrong number, try again" << std::endl;
 			} while (1);
 		}
@@ -36,11 +40,13 @@ int TypeGenNumbers()
 			{
 				std::cin >> Type;
 				if (Type == 1)
-					return 4;
-				else if (Type == 2)
 					return 5;
-				else if (Type == 3)
+				else if (Type == 2)
 					return 6;
+				else if (Type == 3)
+					return 7;
+				else if (Type == 4)
+					return 8;
 				else std::cout << "Wrong number, try again" << std::endl;
 			} while (1);
 		}
@@ -53,8 +59,9 @@ void del()
 	for (int i = 0; i < 5; i++)
 		delete tMark[i];
 	delete[] tMark;
+	delete pTab;
 }
-void gFile()/////////////////////// еще сорт табл
+void gFile(int typetable)
 {
 	std::ifstream file("C:\\Users\\tramp\\source\\repos\\try1\\input.txt");
 	if (file.is_open())
@@ -67,10 +74,17 @@ void gFile()/////////////////////// еще сорт табл
 		file.seekg(0, std::ios::beg);
 		/////
 		MemSize = tDataCount + 10;
+		switch (typetable)
+		{
+		case 1: pTab = new TScanTable(MemSize); break;
+		case 2: pTab = new TSortTable(MemSize); break;
+		case 3: pTab = new TTreeTable(); break;
+		case 4: pTab = new TArrayHash(100); break;
+		}
 		tMark = new int* [MemSize];
 		tKey = new std::string[MemSize];
-		for (int l = 0; l < MemSize; l++)
-			tMark[l] = new int[5];
+		for (int i = 0; i < MemSize; i++)
+			tMark[i] = new int[5];
 		std::cout << "File is opened" << std::endl;
 		std::string line2;
 		for (int k = 0; std::getline(file, line2); k++)
@@ -83,11 +97,10 @@ void gFile()/////////////////////// еще сорт табл
 				if ((i >= 1) && (i <= 5))
 					tMark[k][i-1] = std::stoi(token); //перевод string в int
 			}
-			//tDataCount++;
 		}
 		for (int i = 0; i < tDataCount; i++)
 		{
-			pTab.InsRecord(tKey[i], tMark[i]);
+			pTab->InsRecord(tKey[i], tMark[i]);
 		}
 		file.close();
 	}
@@ -95,22 +108,33 @@ void gFile()/////////////////////// еще сорт табл
 }
 void KeyEnt()
 {
-	tKey[0] = "Sasha Sablin";
-	tKey[1] = "Kolya Beloy";
-	tKey[2] = "Triptis Castle";
-	tKey[3] = "Alex Lionev";
-	tKey[4] = "Mixa Vaneev";
-	for (int i = 5; i < tDataCount; i++)
-		tKey[i] = rand() % 57 + 65;
+	std::string a, b, c, d, e;
+	for (int i = 0; i < tDataCount; i++)
+	{
+		a = rand() % 25 + 65;
+		b = rand() % 25 + 97;
+		c = rand() % 25 + 97;
+		d = rand() % 25 + 97;
+		e = rand() % 25 + 97;
+		tKey[i] = a + b + c + d + e;
+	}
 }
-void generator(void)/////////////////////// еще сорт табл
+void generator(int typetable)/////////////////////// еще сорт табл
 {
 	std::cout << "Enter records amount" << std::endl;
 	std::cin >> tDataCount;
 	MemSize = tDataCount + 10;
+	switch (typetable)
+	{
+	case 1: pTab = new TScanTable(MemSize); break;
+	case 2: pTab = new TSortTable(MemSize); break;
+	case 3: pTab = new TTreeTable(); break;
+	case 4: pTab = new TArrayHash(100); break;
+	default: break;
+	}
 	tMark = new int* [MemSize];
 	tKey = new std::string[MemSize];
-	for (int i = 0; i < tDataCount; i++)
+	for (int i = 0; i < MemSize; i++)
 	{
 		tMark[i] = new int[5];
 		for (int j = 0; j < 5; j++)
@@ -120,15 +144,10 @@ void generator(void)/////////////////////// еще сорт табл
 	int* mr;
 	for (int i = 0; i < tDataCount; i++)
 	{
-		pTab.InsRecord(tKey[i], tMark[i]);
-		mr = pTab.FindRecord(tKey[i]);
-		std::cout << tKey[i] << "  ";
-		for (int j = 0; j < 5; j++)
-			std::cout << mr[j] << " ";
-		std::cout << std::endl;
+		pTab->InsRecord(tKey[i], tMark[i]);
 	}
 }
-void mainmenu(void)
+void mainmenu(int sortinka = 1)
 {
 	Key key;
 	int delta;
@@ -150,12 +169,12 @@ void mainmenu(void)
 		case 0: break;
 		case 1:
 		{
-			if (!pTab.IsFull()&&(!pTab.FindRecord(key)))
+			if (!pTab->IsFull()&&(!pTab->FindRecord(key)))
 			{
 					std::cout << "Insert key marks (4)" << std::endl;
 					for (int j = 0; j < 5; j++)
 						std::cin >> tMark[tDataCount][j];
-					pTab.InsRecord(key, tMark[tDataCount]);
+					pTab->InsRecord(key, tMark[tDataCount]);
 					tDataCount++;
 					std::cout << "Record added" << std::endl;
 			}
@@ -164,50 +183,83 @@ void mainmenu(void)
 		case 2:
 		{
 			int* mr;
-			mr = pTab.FindRecord(key);
+			mr = pTab->FindRecord(key);
 			if (mr != NULL)
 			{
 				std::cout << key << std::endl;
 				for (int j = 0; j < 5; j++)
 					std::cout << mr[j] << " ";
 			}
-			else std::cout << "Record is not found" << std::endl;
+			else std::cout << "Record is not found\n";
 		}break;
 		case 3:
 		{
-			if (pTab.FindRecord(key))
+			if (pTab->FindRecord(key))
 			{
-				pTab.DelRecord(key);
+				pTab->DelRecord(key);
 				std::cout << "Record Deleted" << std::endl;
 				tDataCount--;
 			}
+			else std::cout << "Record is not found\n";
 		}break;
 		case 4:
 		{
-			std::cout << pTab << std::endl;
+			if (sortinka)
+				std::cout << *pTab << std::endl;
+			else pTab->Print(pTab[0]);
 		}break;
-		default: std::cout << "Wrong number, try again" << std::endl; delta = 1;
+		default: std::cout << "Wrong number, try again\n"; delta = 1;
 		}
 	} 	while (delta);
 }
 void menu(void)
 {
 	int Type = TypeGenNumbers();
-	if (Type == 4)
+	if (Type == 5)
 	{
-		generator();
+		generator(1);
 		mainmenu();
 	}
 	else if (Type == 1)
 	{
-		gFile();
+		gFile(1);
+		mainmenu();
+	}
+	else if (Type == 6)
+	{
+		generator(2);
+		mainmenu(0);
+	}
+	else if (Type == 2)
+	{
+		gFile(2);
+		mainmenu(0);
+	}
+	else if (Type == 7)
+	{
+		generator(3);
+		mainmenu();
+	}
+	else if (Type == 3)
+	{
+		gFile(3);
+		mainmenu();
+	}
+	else if (Type == 8)
+	{
+		generator(4);
+		mainmenu();
+	}
+	else if (Type == 4)
+	{
+		gFile(4);
 		mainmenu();
 	}
 }
-int main()
+int main(int argc, char* argv)
 {
 	std::srand(time(NULL));
 	menu();
-	del();//освобождение памяти для временных tKey и tMark
+	del();
 	return 0;
 }

@@ -1,5 +1,4 @@
 #pragma once
-//#include "datavalue.h"
 #include <iostream>
 typedef std::string TKey;
 class TTabRecord 
@@ -24,12 +23,11 @@ public:
 		Key = tr.Key; pValue = tr.pValue;
 		return *this;
 	}
-
 	virtual int operator==(const TTabRecord &tr) { return Key == tr.Key; }
 	virtual int operator< (const TTabRecord &tr) { return Key > tr.Key; }
 	virtual int operator> (const TTabRecord &tr) { return Key < tr.Key; }
 protected:
-	virtual void Print(std::ostream& os) { os << Key << " " << *pValue; }
+	void PrintRec(std::ostream& os) { os << Key << " " << *pValue; }
 
 friend class TArrayTable;
 friend class TScanTable;

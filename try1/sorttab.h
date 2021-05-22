@@ -2,6 +2,9 @@
 enum TSortMethod {INSERT_SORT, MERGE_SORT, QUICK_SORT};
 class TSortTable : public TScanTable
 {
+public: 
+	int dDataCount = 0;
+	TScanTable DopTab;
 protected:
 	TSortMethod SortMethod;
 	void SortData(void);
@@ -24,4 +27,5 @@ public:
 	virtual void InsRecord(TKey k, int* pval);
 
 	virtual void DelRecord(TKey k);
+	virtual void Print(TTable& tab);
 };

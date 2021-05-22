@@ -29,6 +29,7 @@ public:
 	virtual int Reset(void);
 	virtual int IsTabEnded(void) const;
 	virtual int GoNext(void);
+	virtual void Print(TTable& tab) {}
 	friend std::ostream& operator<<(std::ostream &os, TTreeTable& tab);
 	void Draw(void);
 	void Show(void);

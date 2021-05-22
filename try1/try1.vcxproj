@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="arraytab.cpp" />
+    <ClCompile Include="arrhash.cpp" />
     <ClCompile Include="baltree.cpp" />
     <ClCompile Include="scantab.cpp" />
     <ClCompile Include="sorttab.cpp" />
@@ -149,11 +150,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="arraytab.h" />
+    <ClInclude Include="arrhash.h" />
     <ClInclude Include="balnode.h" />
     <ClInclude Include="baltree.h" />
     <ClInclude Include="datacom.h" />
     <ClInclude Include="datavalue.h" />
     <ClInclude Include="Dowling.h" />
+    <ClInclude Include="hashtab.h" />
     <ClInclude Include="scantab.h" />
     <ClInclude Include="sorttab.h" />
     <ClInclude Include="trecord.h" />

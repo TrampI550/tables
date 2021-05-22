@@ -39,20 +39,27 @@ int* TSortTable::FindRecord(TKey k)
 			return pRecs[midd]->GetValuePtr();
 		}
 	}
-	CurrPos = left;
-	return NULL;
+	//CurrPos = left;
+	DopTab.SetSortID(1);
+	DopTab.FindRecord(k);
 }
 
 void TSortTable::InsRecord(TKey k, int* pVal)
 {
-	if (!IsFull())
+	//if (!IsFull())
+	//{
+	//	int* temp = FindRecord(k);
+	//	for (int i = DataCount; i > CurrPos; i--)
+	//		pRecs[i] = pRecs[i - 1];
+	//	pRecs[CurrPos] = new TTabRecord(k,pVal);
+	//	CurrPos = DataCount;
+	//	DataCount++;
+	//}
+	if (!DopTab.IsFull())
 	{
-		int* temp = FindRecord(k);
-		for (int i = DataCount; i > CurrPos; i--)
-			pRecs[i] = pRecs[i - 1];
-		pRecs[CurrPos] = new TTabRecord(k,pVal);
-		CurrPos = DataCount;
-		DataCount++;
+		DopTab.SetSortID(1);
+		int* temp = DopTab.FindRecord(k);
+		DopTab.InsRecord(k, pVal);
 	}
 }
 
@@ -146,7 +153,21 @@ void TSortTable::MergeSorter(PTTabRecord*& pData, PTTabRecord*& pBuff, int Size)
 
 void TSortTable::MergeData(PTTabRecord*& pData, PTTabRecord*& pBuff, int n1,int n2)
 {
-
+	int i = 0, i1 = 0, i2 = 0;
+	PTTabRecord* pDat1 = pData, * pDat2 = pData + n1;
+	while ((i1 < n1) && (i2 < n2))
+	{
+		if (pDat1[i1]->Key < pDat2[i2]->Key)
+			pBuff[i++] = pDat1[i1++];
+		else pBuff[i++] = pDat2[i2++];
+	}
+	while (i1 < n1)
+		pBuff[i++] = pDat1[i1++];
+	while (i2<n2)
+		pBuff[i++] = pDat2[i2++];
+	pData = pBuff;
+	pBuff = pDat1;
+	Efficiency += n1 + n2;
 }
 void TSortTable::QuickSort(PTTabRecord* pRecs, int DataCount)
 {
@@ -181,4 +202,16 @@ void TSortTable::QuickSplit(PTTabRecord* pData, int Size, int& Pivot)
 	pData[i2] = pPivot;
 	Pivot = i2;
 	Efficiency += Size;
+}
+void TSortTable::Print(TTable& tab)
+{
+	std::cout << "Table printing" << std::endl;
+	for (tab.Reset(); !tab.IsTabEnded(); tab.GoNext())
+	{
+		std::cout << " Key: " << tab.GetKey();
+		std::cout << "  Val: ";
+		for (int i = 0; i < 5; i++)
+			std::cout << tab.GetValuePtr()[i] << " ";
+		std::cout << std::endl;
+	}
 }

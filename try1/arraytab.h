@@ -43,5 +43,5 @@ public:
 	virtual int GoNext(void);
 	virtual int SetCurrentPos(int pos);
 	int GetCurrentPos(void) const { return CurrPos; }
-	//friend TSortTable;
+	friend TSortTable;
 };

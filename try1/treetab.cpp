@@ -40,7 +40,23 @@ void TTreeTable::DelRecord(TKey k)
 {
 	if (FindRecord(k) != NULL)
 	{
-
+		PTTreeNode pNode = *ppRef;
+		if (pNode->pRight == NULL) *ppRef = pNode->pLeft;
+		else if (pNode->pLeft == NULL) *ppRef = pNode->pRight;
+		else
+		{
+			PTTreeNode pN = pNode->pLeft, * ppR = &pNode->pLeft;
+			while (pN->pRight != NULL)
+			{
+				ppR = &pN->pRight;
+				pN = *ppR;
+			}
+			pNode->pValue = pN->pValue;
+			pNode->Key = pN->Key;
+			pNode = pN;
+			*ppR = pN->pLeft;
+		}
+		delete pNode;
 	}
 }
 
@@ -73,7 +89,21 @@ int TTreeTable::IsTabEnded(void) const
 
 int TTreeTable::GoNext(void)
 {
-	return 1;
+	if ((!IsTabEnded()) && (pCurrent != NULL))
+	{
+		PTTreeNode pNode = pCurrent = pCurrent->GetRight();
+		Stack.pop();
+		while (pNode != NULL)
+		{
+			Stack.push(pNode);
+			pCurrent = pNode;
+			pNode = pNode->GetLeft();
+		}
+		if((pCurrent == NULL)&&(!Stack.empty()))
+			pCurrent = Stack.top();
+		CurrPos++;
+	}
+	return IsTabEnded();
 }
 
 std::ostream& operator<<(std::ostream &os, TTreeTable& tab)
@@ -130,7 +160,7 @@ void TTreeTable::PrintTreeTab(std::ostream &os, PTTreeNode pNode)
 	if (pNode != NULL)
 	{
 		PrintTreeTab(os, pNode->pLeft);
-		pNode->Print(os);
+		pNode->PrintRec(os);
 		os << std::endl;
 		PrintTreeTab(os,pNode->pRight);
 	}
@@ -142,7 +172,7 @@ void TTreeTable::DrawTreeTab(PTTreeNode pNode, int Level)
 	{
 		DrawTreeTab(pNode->pRight, Level + 1);
 		for (int i = 0; i < 2 * Level; i++) std::cout << " ";
-		pNode->Print(std::cout);
+		pNode->PrintRec(std::cout);
 		std::cout << std::endl;
 		DrawTreeTab(pNode->pLeft, Level + 1);
 	}

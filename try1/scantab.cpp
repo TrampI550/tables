@@ -2,20 +2,56 @@
 
 int* TScanTable::FindRecord(TKey k)
 {
-    int i;
-    for (i = 0; i < DataCount; i++)
-        if (pRecs[i]->Key == k) break;
-    Efficiency = i + 1;
-    if (i < DataCount) { CurrPos = i; return pRecs[i]->pValue; }
-    return NULL;
+    if (SortID == 0)
+    {
+        int i;
+        for (i = 0; i < DataCount; i++)
+            if (pRecs[i]->Key == k) break;
+        Efficiency = i + 1;
+        if (i < DataCount) { CurrPos = i; return pRecs[i]->pValue; }
+        return NULL;
+    }
+    else
+    {
+        int midd = 0, left = 0, right = DataCount - 1;
+        SortID = 0;
+        while (left <= right)
+        {
+            midd = (left + right) / 2;
+            if (k < pRecs[midd]->GetKey())
+                right = midd - 1;
+            else if (k > pRecs[midd]->GetKey())
+                left = midd + 1;
+            else
+            {
+                CurrPos = midd;
+                return pRecs[midd]->GetValuePtr();
+            }
+        }
+        CurrPos = left;
+        return NULL;
+    }
 }
 void TScanTable::InsRecord(TKey k, int* pVal)
 {
     if (!IsFull())
     {
-        pRecs[DataCount] = new TTabRecord(k, pVal);
-        CurrPos = DataCount;
-        DataCount++;
+        if (SortID == 0)
+        {
+            pRecs[DataCount] = new TTabRecord(k, pVal);
+            CurrPos = DataCount;
+            DataCount++;
+        }
+        else
+        {
+            SortID = 0;
+            int* temp = FindRecord(k);
+            for (int i = DataCount; i > CurrPos; i--)
+                pRecs[i] = pRecs[i - 1];
+            pRecs[CurrPos] = new TTabRecord(k,pVal);
+            CurrPos = DataCount;
+            DataCount++;
+        }
     }
 }
 void TScanTable::DelRecord(TKey k)
