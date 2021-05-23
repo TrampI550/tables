@@ -165,30 +165,24 @@ void TSortTable::MergeSorter(PTTabRecord*& pData, PTTabRecord*& pBuff, int Size)
 	MergeData(pData, pBuff, n1, n2);
 }
 
-void TSortTable::Merge(PTTabRecord* Tab, PTTabRecord* dTab, int n1, int n2)
+void TSortTable::Merge()
 {
-	int i = 0, i1 = 0, i2 = 0;
-	PTTabRecord* pDat1 = Tab, * pDat2 = dTab;
-	PTTabRecord* pBuff = new PTTabRecord[n1+n2];
-	while ((i1 < n1) && (i2 < n2))
-	{
-		if (pDat1[i1]->Key < pDat2[i2]->Key)
-			pBuff[i++] = pDat1[i1++];
-		else pBuff[i++] = pDat2[i2++];
-	}
-	while (i1 < n1)
-		pBuff[i++] = pDat1[i1++];
-	while (i2 < n2)
-		pBuff[i++] = pDat2[i2++];
-	Tab = pBuff;
-	pBuff = pDat1;
-
-	std::cout << pBuff<<std::endl;
-	for (int k = 0; k < n1 + n2; k++)
-	{
-		std::cout << Tab[k]->GetKey() << std::endl;
-		std::cout << dTab[k]->GetKey() << std::endl;
-	}
+	//int i = 0, i1 = 0, i2 = 0;
+	//int n1 = DataCount; int n2 = DopTab.GetDataCount();
+	//PTTabRecord* pDat1 = pRecs/*, * pDat2 = dTab;*/;
+	//PTTabRecord* pBuff = new PTTabRecord[n1+n2];
+	//while ((i1 < n1) && (i2 < n2))
+	//{
+	//	if (pDat1[i1]->Key < pDat2[i2]->Key)
+	//		pBuff[i++] = pDat1[i1++];
+	//	else pBuff[i++] = pDat2[i2++];
+	//}
+	//while (i1 < n1)
+	//	pBuff[i++] = pDat1[i1++];
+	//while (i2 < n2)
+	//	pBuff[i++] = pDat2[i2++];
+	//pRecs = pBuff;
+	//pBuff = pDat1;
 }
 
 void TSortTable::MergeData(PTTabRecord*& pData, PTTabRecord*& pBuff, int n1,int n2)
@@ -243,16 +237,16 @@ void TSortTable::QuickSplit(PTTabRecord* pData, int Size, int& Pivot)
 	Pivot = i2;
 	Efficiency += Size;
 }
-void TSortTable::Print(TTable& tab)
+void TSortTable::Print()
 {
-	Merge(tab.GetAllpRecs(), DopTab.GetAllpRecs(), GetDataCount(), DopTab.GetDataCount());
+	Merge();
 	std::cout << "Table printing" << std::endl;
-	for (tab.Reset(); !tab.IsTabEnded(); tab.GoNext())
+	for (Reset(); !IsTabEnded(); GoNext())
 	{
-		std::cout << " Key: " << tab.GetKey();
+		std::cout << " Key: " << GetKey();
 		std::cout << "  Val: ";
 		for (int i = 0; i < 5; i++)
-			std::cout << tab.GetValuePtr()[i] << " ";
+			std::cout << GetValuePtr()[i] << " ";
 		std::cout << std::endl;
 	}
 }

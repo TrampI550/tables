@@ -20,5 +20,4 @@ protected:
     }
 public:
 	THashTable() : TTable() {}
-    virtual void Print(TTable &tab) {}
 };

@@ -23,8 +23,8 @@ public:
 	virtual int GoNext(void) = 0;
 	virtual TKey GetKey(void) const = 0;
 	virtual int* GetValuePtr(void) const = 0;
-	virtual void Print(TTable& tab) = 0;
 	virtual PTTabRecord* GetAllpRecs() const = 0;
+	virtual void Print() {}
 	friend std::ostream& operator<<(std::ostream& os, TTable& tab)
 	{
 		std::cout << "Table printing" << std::endl;

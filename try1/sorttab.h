@@ -20,12 +20,12 @@ public:
 	TSortTable& operator= (const TScanTable& tab);
 	TSortMethod GetSortMethod(void) { return SortMethod; }
 	void SetSortMethod(TSortMethod sm) { SortMethod = sm; }
-	void Merge(PTTabRecord* Tab, PTTabRecord* dTab, int n1, int n2);
+	void Merge();
 
 	virtual int* FindRecord(TKey k);
 
 	virtual void InsRecord(TKey k, int* pval);
 
 	virtual void DelRecord(TKey k);
-	virtual void Print(TTable& tab);
+	virtual void Print();
 };

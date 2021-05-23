@@ -210,7 +210,7 @@ void mainmenu(int sortinka = 1)
 		{
 			if (sortinka)
 				std::cout << *pTab << std::endl;
-			else pTab->Print(pTab[0]);
+			else pTab->Print();
 		}break;
 		default: std::cout << "Wrong number, try again\n"; delta = 1;
 		}
