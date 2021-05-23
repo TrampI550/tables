@@ -30,6 +30,7 @@ public:
 	virtual int IsTabEnded(void) const;
 	virtual int GoNext(void);
 	virtual void Print(TTable& tab) {}
+	virtual PTTabRecord* GetAllpRecs() const { return NULL; }
 	friend std::ostream& operator<<(std::ostream &os, TTreeTable& tab);
 	void Draw(void);
 	void Show(void);

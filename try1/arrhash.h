@@ -29,6 +29,7 @@ public:
 	virtual int Reset(void) { CurrPos = 0; return IsTabEnded(); }
 	virtual int IsTabEnded(void) const;
 	virtual int GoNext(void);
+	virtual PTTabRecord* GetAllpRecs() const { return NULL; }
 
 	virtual TKey GetKey(void) const;
 	virtual int* GetValuePtr(void) const;

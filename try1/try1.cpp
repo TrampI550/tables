@@ -169,14 +169,18 @@ void mainmenu(int sortinka = 1)
 		case 0: break;
 		case 1:
 		{
-			if (!pTab->IsFull()&&(!pTab->FindRecord(key)))
+			if (!pTab->IsFull())
 			{
+				if (!pTab->FindRecord(key))
+				{
 					std::cout << "Insert key marks (4)" << std::endl;
 					for (int j = 0; j < 5; j++)
 						std::cin >> tMark[tDataCount][j];
 					pTab->InsRecord(key, tMark[tDataCount]);
 					tDataCount++;
 					std::cout << "Record added" << std::endl;
+				}
+				else std::cout << "Insert Error: Record is being\n";
 			}
 			else std::cout << "Insert Error: Table is full\n";
 		}break;
@@ -194,13 +198,13 @@ void mainmenu(int sortinka = 1)
 		}break;
 		case 3:
 		{
-			if (pTab->FindRecord(key))
-			{
-				pTab->DelRecord(key);
-				std::cout << "Record Deleted" << std::endl;
-				tDataCount--;
-			}
-			else std::cout << "Record is not found\n";
+				if (pTab->FindRecord(key))
+				{
+					pTab->DelRecord(key);
+					std::cout << "Record Deleted" << std::endl;
+					tDataCount--;
+				}
+				else std::cout << "Record is not found\n";
 		}break;
 		case 4:
 		{

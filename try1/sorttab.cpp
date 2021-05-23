@@ -39,9 +39,11 @@ int* TSortTable::FindRecord(TKey k)
 			return pRecs[midd]->GetValuePtr();
 		}
 	}
-	//CurrPos = left;
+	CurrPos = left;
 	DopTab.SetSortID(1);
-	DopTab.FindRecord(k);
+	if (DopTab.FindRecord(k))	
+		return DopTab.GetValuePtr();
+	return NULL;
 }
 
 void TSortTable::InsRecord(TKey k, int* pVal)
@@ -59,43 +61,55 @@ void TSortTable::InsRecord(TKey k, int* pVal)
 	{
 		DopTab.SetSortID(1);
 		int* temp = DopTab.FindRecord(k);
+		DopTab.SetSortID(1);
 		DopTab.InsRecord(k, pVal);
 	}
+	CurrPos = DataCount;
 }
 
 void TSortTable::DelRecord(TKey k)
 {
-	int midd = 0, left = 0, right = DataCount - 1, cheak = 1;
-	while (cheak)
+	if (IsEmpty())
 	{
-		midd = (left + right) / 2;
-		if (k < pRecs[midd]->GetKey())       // если искомое меньше значения в ячейке
-			right = midd - 1;      // смещаем правую границу поиска
-		else if (k > pRecs[midd]->GetKey())  // если искомое больше значения в ячейке
-			left = midd + 1;    // смещаем левую границу поиска
-		else  // иначе (значения равны)
+		int midd = 0, left = 0, right = DataCount - 1, cheak = 1;
+		while (cheak)
 		{
-			if (midd < DataCount)
+			midd = (left + right) / 2;
+			if (k < pRecs[midd]->GetKey())       // если искомое меньше значения в ячейке
+				right = midd - 1;      // смещаем правую границу поиска
+			else if (k > pRecs[midd]->GetKey())  // если искомое больше значения в ячейке
+				left = midd + 1;    // смещаем левую границу поиска
+			else  // иначе (значения равны)
 			{
-				DataCount--;
-				for (int j = midd; j < DataCount; j++)
+				if (midd < DataCount)
 				{
-					pRecs[j]->pValue = pRecs[j + 1]->pValue;
-					pRecs[j]->Key = pRecs[j + 1]->Key;
+					DataCount--;
+					for (int j = midd; j < DataCount; j++)
+					{
+						pRecs[j]->pValue = pRecs[j + 1]->pValue;
+						pRecs[j]->Key = pRecs[j + 1]->Key;
+					}
+					pRecs[DataCount]->pValue = NULL;
+					pRecs[DataCount]->Key = "";
+					pRecs[DataCount] = NULL;
 				}
-				pRecs[DataCount]->pValue = NULL;
-				pRecs[DataCount]->Key = "";
-				pRecs[DataCount] = NULL;
+				cheak = 0;
 			}
-			cheak = 0;
+			if (left > right) // если границы сомкнулись 
+			{
+				DopTab.SetSortID(1);
+				DopTab.DelRecord(k);
+				cheak = 0;
+			}
 		}
-		if (left > right) // если границы сомкнулись 
-		{
-			std::cout << "Record is not found" << std::endl;
-			cheak = 0;
-		}
+		CurrPos = midd - 1;
 	}
-	CurrPos = midd - 1;
+	else
+	{
+		CurrPos = 0;
+		DopTab.SetSortID(1);
+		DopTab.DelRecord(k);
+	}
 }
 
 void TSortTable::SortData(void)
@@ -149,6 +163,32 @@ void TSortTable::MergeSorter(PTTabRecord*& pData, PTTabRecord*& pBuff, int Size)
 		MergeSorter(pDat2, pBuff2, n2);
 	}
 	MergeData(pData, pBuff, n1, n2);
+}
+
+void TSortTable::Merge(PTTabRecord* Tab, PTTabRecord* dTab, int n1, int n2)
+{
+	int i = 0, i1 = 0, i2 = 0;
+	PTTabRecord* pDat1 = Tab, * pDat2 = dTab;
+	PTTabRecord* pBuff = new PTTabRecord[n1+n2];
+	while ((i1 < n1) && (i2 < n2))
+	{
+		if (pDat1[i1]->Key < pDat2[i2]->Key)
+			pBuff[i++] = pDat1[i1++];
+		else pBuff[i++] = pDat2[i2++];
+	}
+	while (i1 < n1)
+		pBuff[i++] = pDat1[i1++];
+	while (i2 < n2)
+		pBuff[i++] = pDat2[i2++];
+	Tab = pBuff;
+	pBuff = pDat1;
+
+	std::cout << pBuff<<std::endl;
+	for (int k = 0; k < n1 + n2; k++)
+	{
+		std::cout << Tab[k]->GetKey() << std::endl;
+		std::cout << dTab[k]->GetKey() << std::endl;
+	}
 }
 
 void TSortTable::MergeData(PTTabRecord*& pData, PTTabRecord*& pBuff, int n1,int n2)
@@ -205,6 +245,7 @@ void TSortTable::QuickSplit(PTTabRecord* pData, int Size, int& Pivot)
 }
 void TSortTable::Print(TTable& tab)
 {
+	Merge(tab.GetAllpRecs(), DopTab.GetAllpRecs(), GetDataCount(), DopTab.GetDataCount());
 	std::cout << "Table printing" << std::endl;
 	for (tab.Reset(); !tab.IsTabEnded(); tab.GoNext())
 	{

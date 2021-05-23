@@ -56,21 +56,60 @@ void TScanTable::InsRecord(TKey k, int* pVal)
 }
 void TScanTable::DelRecord(TKey k)
 {
-    int i;
-    for (i = 0; i < DataCount; i++)
-        if (pRecs[i]->Key == k) break;
-    Efficiency = i + 1;
-    if (i < DataCount)
-    { 
-        DataCount--;
-        for (int j = i; j < DataCount; j++)
+    if (SortID == 0)
+    {
+
+        int i;
+        for (i = 0; i < DataCount; i++)
+            if (pRecs[i]->Key == k) break;
+        Efficiency = i + 1;
+        if (i < DataCount)
         {
-            pRecs[j]->pValue = pRecs[j + 1]->pValue;
-            pRecs[j]->Key = pRecs[j + 1]->Key;
+            DataCount--;
+            for (int j = i; j < DataCount; j++)
+            {
+                pRecs[j]->pValue = pRecs[j + 1]->pValue;
+                pRecs[j]->Key = pRecs[j + 1]->Key;
+            }
+            pRecs[DataCount]->pValue = NULL;
+            pRecs[DataCount]->Key = "";
+            pRecs[DataCount] = NULL;
+            CurrPos = i - 1;
         }
-        pRecs[DataCount]->pValue = NULL;
-        pRecs[DataCount]->Key = "";
-        pRecs[DataCount] = NULL;
-        CurrPos = i - 1;
+    }
+    else
+    {
+        SortID = 0;
+        int midd = 0, left = 0, right = DataCount - 1, cheak = 1;
+        while (cheak)
+        {
+            midd = (left + right) / 2;
+            if (k < pRecs[midd]->GetKey())
+                right = midd - 1;
+            else if (k > pRecs[midd]->GetKey())
+                left = midd + 1;
+            else
+            {
+                if (midd < DataCount)
+                {
+                    DataCount--;
+                    for (int j = midd; j < DataCount; j++)
+                    {
+                        pRecs[j]->pValue = pRecs[j + 1]->pValue;
+                        pRecs[j]->Key = pRecs[j + 1]->Key;
+                    }
+                    pRecs[DataCount]->pValue = NULL;
+                    pRecs[DataCount]->Key = "";
+                    pRecs[DataCount] = NULL;
+                }
+                cheak = 0;
+            }
+            if (left > right) // если границы сомкнулись 
+            {
+                std::cout << "Record is not found\n";
+                cheak = 0;
+            }
+        }
+        CurrPos = midd - 1;
     }
 }

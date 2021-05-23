@@ -3,7 +3,6 @@ enum TSortMethod {INSERT_SORT, MERGE_SORT, QUICK_SORT};
 class TSortTable : public TScanTable
 {
 public: 
-	int dDataCount = 0;
 	TScanTable DopTab;
 protected:
 	TSortMethod SortMethod;
@@ -21,6 +20,7 @@ public:
 	TSortTable& operator= (const TScanTable& tab);
 	TSortMethod GetSortMethod(void) { return SortMethod; }
 	void SetSortMethod(TSortMethod sm) { SortMethod = sm; }
+	void Merge(PTTabRecord* Tab, PTTabRecord* dTab, int n1, int n2);
 
 	virtual int* FindRecord(TKey k);
 

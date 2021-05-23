@@ -32,6 +32,10 @@ public:
 			return pRecs[n];
 		return NULL;
 	}
+	virtual PTTabRecord* GetAllpRecs() const
+	{
+		return pRecs;
+	}
 	virtual int IsFull() const { return DataCount >= TabSize; }
 	int GetTabSize() const { return TabSize; }
 	virtual TKey GetKey(void) const { return GetKey(CURRENT_POS); }
@@ -43,5 +47,5 @@ public:
 	virtual int GoNext(void);
 	virtual int SetCurrentPos(int pos);
 	int GetCurrentPos(void) const { return CurrPos; }
-	friend TSortTable;
+	//friend TSortTable;
 };
