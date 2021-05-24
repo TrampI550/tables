@@ -32,9 +32,26 @@ public:
 			return pRecs[n];
 		return NULL;
 	}
+	void FreepRecs()
+	{
+		for (int i = 0; DataCount; i++)
+		{
+			pRecs[i] = NULL;
+			DataCount--;
+		}
+	}
 	virtual PTTabRecord* GetAllpRecs() const
 	{
 		return pRecs;
+	}
+	TArrayTable(TArrayTable &oth)
+	{
+		pRecs = new PTTabRecord[oth.TabSize];
+		for (int i = 0; i < oth.TabSize; i++)
+			pRecs[i] = oth.pRecs[i];
+		TabSize = oth.TabSize;
+		DataCount = oth.DataCount;
+		CurrPos = oth.CurrPos;
 	}
 	virtual int IsFull() const { return DataCount >= TabSize; }
 	int GetTabSize() const { return TabSize; }

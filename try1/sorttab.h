@@ -4,6 +4,7 @@ class TSortTable : public TScanTable
 {
 public: 
 	TScanTable DopTab;
+	PTTabRecord* pBuff = NULL;
 protected:
 	TSortMethod SortMethod;
 	void SortData(void);

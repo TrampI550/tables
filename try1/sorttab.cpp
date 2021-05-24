@@ -167,21 +167,24 @@ void TSortTable::MergeSorter(PTTabRecord*& pData, PTTabRecord*& pBuff, int Size)
 
 void TSortTable::Merge()
 {
-	//int i = 0, i1 = 0, i2 = 0;
-	//int n1 = DataCount; int n2 = DopTab.GetDataCount();
-	//PTTabRecord* pDat1 = pRecs/*, * pDat2 = dTab;*/;
-	//PTTabRecord* pBuff = new PTTabRecord[n1+n2];
-	//while ((i1 < n1) && (i2 < n2))
-	//{
-	//	if (pDat1[i1]->Key < pDat2[i2]->Key)
-	//		pBuff[i++] = pDat1[i1++];
-	//	else pBuff[i++] = pDat2[i2++];
-	//}
-	//while (i1 < n1)
-	//	pBuff[i++] = pDat1[i1++];
-	//while (i2 < n2)
-	//	pBuff[i++] = pDat2[i2++];
-	//pRecs = pBuff;
+	int i = 0, i1 = 0, i2 = 0;
+	int n1 = DataCount; int n2 = DopTab.GetDataCount();
+	PTTabRecord* pDat1 = pRecs, * pDat2 = DopTab.GetAllpRecs();
+	pBuff = new PTTabRecord[n1+n2];
+	while ((i1 < n1) && (i2 < n2))
+	{
+		if (pDat1[i1]->Key < pDat2[i2]->Key)
+			pBuff[i++] = pDat1[i1++];
+		else
+			pBuff[i++] = pDat2[i2++];
+	}
+	while (i1 < n1)
+		pBuff[i++] = pDat1[i1++];
+	while (i2 < n2)
+		pBuff[i++] = pDat2[i2++];
+	DataCount += DopTab.GetDataCount();
+	pRecs = pBuff;
+	DopTab.FreepRecs();
 	//pBuff = pDat1;
 }
 
@@ -240,7 +243,6 @@ void TSortTable::QuickSplit(PTTabRecord* pData, int Size, int& Pivot)
 void TSortTable::Print()
 {
 	Merge();
-	std::cout << "Table printing" << std::endl;
 	for (Reset(); !IsTabEnded(); GoNext())
 	{
 		std::cout << " Key: " << GetKey();
