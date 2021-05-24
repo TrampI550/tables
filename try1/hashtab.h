@@ -1,6 +1,6 @@
 #pragma once
 
-#include "arraytab.h"
+#include "ttable.h"
 
 class TTabRecord;
 

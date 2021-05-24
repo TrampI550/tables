@@ -26,7 +26,7 @@ public:
 	virtual void InsRecord(TKey k, int* pVal);
 	virtual void DelRecord(TKey k);
 
-	virtual int Reset(void) { CurrPos = 0; return IsTabEnded(); }
+	virtual int Reset(void);
 	virtual int IsTabEnded(void) const;
 	virtual int GoNext(void);
 	virtual PTTabRecord* GetAllpRecs() const { return NULL; }

@@ -18,7 +18,7 @@ int TypeGenNumbers()
 		std::cin >> Type;
 		if (Type == 1)
 		{
-			std::cout << "Select the type of table:\n 1. Scan Table \n 2. Sort Table\n 3. Tree Table" << std::endl;
+			std::cout << "Select the type of table:\n 1. Scan Table \n 2. Sort Table\n 3. Tree Table\n 4. Hash Table" << std::endl;
 			do
 			{
 				std::cin >> Type;
@@ -35,7 +35,7 @@ int TypeGenNumbers()
 		}
 		if (Type == 2)
 		{
-			std::cout << "Select the type of table:\n 1. Scan Table \n 2. Sort Table\n 3. Tree Table" << std::endl;
+			std::cout << "Select the type of table:\n 1. Scan Table \n 2. Sort Table\n 3. Tree Table\n 4. Hash Table" << std::endl;
 			do
 			{
 				std::cin >> Type;
@@ -79,7 +79,7 @@ void gFile(int typetable)
 		case 1: pTab = new TScanTable(MemSize); break;
 		case 2: pTab = new TSortTable(MemSize); break;
 		case 3: pTab = new TTreeTable(); break;
-		case 4: pTab = new TArrayHash(100); break;
+		case 4: pTab = new TArrayHash(MemSize + 100); break;
 		}
 		tMark = new int* [MemSize];
 		tKey = new std::string[MemSize];

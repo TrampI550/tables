@@ -26,20 +26,19 @@ int* TArrayHash::FindRecord(TKey k)
 	{
 		Efficiency++;
 		if (pRecs[CurrPos] == NULL) break;
-		else 
-			if (pRecs[CurrPos] == pMark)
-			{
-				if (FreePos == -1) FreePos = CurrPos;
-			}
-			else 
-				if (pRecs[CurrPos]->GetKey() == k)
-				{
-					pValue = pRecs[CurrPos]->GetValuePtr();
-					break;
-				}
+		else if (pRecs[CurrPos] == pMark)
+		{
+			if (FreePos == -1) FreePos = CurrPos;
+		}
+		else if (pRecs[CurrPos]->GetKey() == k)
+		{
+			pValue = pRecs[CurrPos]->GetValuePtr();
+			break;
+		}
 		CurrPos = GetNextPos(CurrPos);
 	}
-	if (pValue == NULL) return NULL;
+	if (pValue == NULL) 
+		return NULL;
 	return pValue;
 }
 
@@ -91,4 +90,13 @@ TKey TArrayHash::GetKey(void) const
 int* TArrayHash::GetValuePtr(void) const
 {
 	return  ((CurrPos < 0) || (CurrPos >= TabSize)) ? NULL : pRecs[CurrPos]->GetValuePtr();
+}
+
+int TArrayHash::Reset(void) 
+{ 
+	CurrPos = 0;
+	while (CurrPos < TabSize)
+		if ((pRecs[CurrPos] != NULL) && (pRecs[CurrPos] != pMark)) break;
+		else CurrPos++;
+	return IsTabEnded();
 }

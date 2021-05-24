@@ -35,6 +35,6 @@ friend class TSortTable;
 friend class TTreeNode;
 friend class TTreeTable;
 friend class TArrayhash;
-friend class TListHash;
+friend class THashTable;
 };
 typedef TTabRecord* PTTabRecord;
