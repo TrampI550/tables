@@ -5,6 +5,7 @@
 #include <sstream>
 #include <fstream>
 typedef std::string Key;
+int choose = 1;
 int** tMark = NULL;
 Key* tKey = NULL;
 int tDataCount = 0, MemSize = 10;
@@ -79,7 +80,7 @@ void gFile(int typetable)
 		case 1: pTab = new TScanTable(MemSize); break;
 		case 2: pTab = new TSortTable(MemSize); break;
 		case 3: pTab = new TTreeTable(); break;
-		case 4: pTab = new TArrayHash(MemSize + 100); break;
+		case 4: pTab = new TArrayHash(choose, MemSize + 100); break;
 		}
 		tMark = new int* [MemSize];
 		tKey = new std::string[MemSize];
@@ -153,7 +154,7 @@ void mainmenu(int sortinka = 1)
 	int delta;
 	do
 	{
-		std::cout << "select option\n" << "0 - Exit\n"
+		std::cout << "Select option\n" << "0 - Exit\n"
 			<< "1 - Insert record\n" << "2 - Find record\n"
 			<< "3 - Delete record\n" << "4 - Print table\n";
 		std::cin >> delta;
@@ -173,7 +174,7 @@ void mainmenu(int sortinka = 1)
 			{
 				if (!pTab->FindRecord(key))
 				{
-					std::cout << "Insert key marks (4)" << std::endl;
+					std::cout << "Insert key marks (5)" << std::endl;
 					for (int j = 0; j < 5; j++)
 						std::cin >> tMark[tDataCount][j];
 					pTab->InsRecord(key, tMark[tDataCount]);

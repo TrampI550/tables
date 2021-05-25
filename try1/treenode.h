@@ -6,13 +6,13 @@ typedef TTreeNode* PTTreeNode;
 class TTreeNode : public TTabRecord
 {
 protected:
-	PTTreeNode pLeft, pRight;// указатели на поддеревья
+	PTTreeNode pLeft, pRight;
 public:
 	TTreeNode(TKey k = "", int* pVal = NULL, PTTreeNode pL = NULL, PTTreeNode pR = NULL) :
 		TTabRecord(k, pVal), pLeft(pL), pRight(pR) {}
 
-	PTTreeNode GetLeft(void) const { return pLeft; }// указатель на левое поддерево
-	PTTreeNode GetRight(void) const { return pRight; }// указатель на правое поддерево
+	PTTreeNode GetLeft(void) const { return pLeft; }
+	PTTreeNode GetRight(void) const { return pRight; }
 
 	friend class TTreeTable;
 };

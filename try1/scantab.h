@@ -3,7 +3,7 @@
 class TScanTable : public TArrayTable
 {
 protected:
-	int SortID = 0;// идентификатор для упорядоченной таблицы с перепаковкой( Если 0, то обычная таблица, если 1, то сорт)
+	int SortID = 0;
 public:
 	TScanTable(int Size = TabMaxSize) : TArrayTable(Size) {};
 	virtual int* FindRecord(TKey k);

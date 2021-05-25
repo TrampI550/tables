@@ -1,2 +1,8 @@
-﻿  treetab.cpp
+﻿  arrhash.cpp
+C:\Users\tramp\source\repos\try1\try1\hashtab.h(27,31): warning C4018: <: несоответствие типов со знаком и без знака
+  try1.cpp
+C:\Users\tramp\source\repos\try1\try1\hashtab.h(27,31): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\tramp\source\repos\try1\try1\try1.cpp(145,7): warning C4101: mr: неиспользованная локальная переменная
+C:\Users\tramp\source\repos\try1\try1\try1.cpp(266,17): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  Создание кода...
   try1.vcxproj -> C:\Users\tramp\source\repos\try1\Debug\try1.exe

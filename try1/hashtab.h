@@ -7,16 +7,30 @@ class TTabRecord;
 class THashTable : public TTable
 {
 protected:
-	virtual unsigned long HashFunc(const TKey key)// РҐРµС€-С„СѓРЅРєС†РёСЏ
+    virtual unsigned long HashFunc(const TKey key, const int choose)// Хеш-функция
     {
-        unsigned int hash = 1315423911;
-
-        for (std::size_t i = 0; i < key.length(); i++)
+        if (choose == 1)
         {
-            hash ^= ((hash << 5) + key[i] + (hash >> 2));
-        }
+            unsigned int hash = 1315423911;
 
-        return (hash & 0x7FFFFFFF);
+            for (std::size_t i = 0; i < key.length(); i++)
+            {
+                hash ^= ((hash << 5) + key[i] + (hash >> 2));
+            }
+
+            return (hash & 0x7FFFFFFF);
+        }
+        else // второй вариант хеш-функции
+        {
+            const int p = 31;
+            long long hash = 0, p_pow = 1;
+            for (int i = 0; i < key.length(); i++)
+            {
+                hash += (key[i] - 'a' + 1) * p_pow;
+                p_pow *= p;
+            }
+            return (hash & 0x7FFFFFFF);
+        }
     }
 public:
 	THashTable() : TTable() {}
