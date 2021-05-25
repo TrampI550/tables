@@ -3,8 +3,8 @@ enum TSortMethod {INSERT_SORT, MERGE_SORT, QUICK_SORT};//метод сортир
 class TSortTable : public TScanTable
 {
 public: 
-	TScanTable DopTab;
-	PTTabRecord* pBuff = NULL;
+	TScanTable DopTab;//дополнительная таблица
+	PTTabRecord* pBuff = NULL;//буфер для заполнения таблицы в Merge()
 protected:
 	TSortMethod SortMethod;
 	void SortData(void);//сортировка данных
