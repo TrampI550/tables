@@ -24,9 +24,7 @@ public:
 	void Merge();
 
 	virtual int* FindRecord(TKey k);
-
 	virtual void InsRecord(TKey k, int* pval);
-
 	virtual void DelRecord(TKey k);
 	virtual void Print();
 };

@@ -56,6 +56,7 @@ void TTreeTable::DelRecord(TKey k)
 			pNode = pN;
 			*ppR = pN->pLeft;
 		}
+		DataCount--;
 		delete pNode;
 	}
 }

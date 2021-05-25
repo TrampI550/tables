@@ -1,5 +1,5 @@
 #include "sorttab.h"
-TSortTable::TSortTable(const TScanTable & tab)///////////////
+TSortTable::TSortTable(const TScanTable & tab)
 {
 	*this = tab;
 }
