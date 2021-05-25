@@ -7,7 +7,7 @@ class TTabRecord;
 class THashTable : public TTable
 {
 protected:
-	virtual unsigned long HashFunc(const TKey key)
+	virtual unsigned long HashFunc(const TKey key)// Хеш-функция
     {
         unsigned int hash = 1315423911;
 
