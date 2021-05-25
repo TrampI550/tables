@@ -7,7 +7,7 @@ class TTabRecord;
 class THashTable : public TTable
 {
 protected:
-    virtual unsigned long HashFunc(const TKey key, const int choose)// Хеш-функция
+    virtual unsigned long HashFunc(const TKey key, const int choose)// С…РµС€-С„СѓРЅРєС†РёСЏ 1
     {
         if (choose == 1)
         {
@@ -20,7 +20,7 @@ protected:
 
             return (hash & 0x7FFFFFFF);
         }
-        else // второй вариант хеш-функции
+        else // С…РµС€-С„СѓРЅРєС†РёСЏ 2
         {
             const int p = 31;
             long long hash = 0, p_pow = 1;
