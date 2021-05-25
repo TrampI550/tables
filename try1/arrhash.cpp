@@ -1,7 +1,8 @@
 #include "arrhash.h"
 
-TArrayHash :: TArrayHash (int Size , int Step) : THashTable() 
+TArrayHash :: TArrayHash (int _choose, int Size , int Step) : THashTable() 
 {
+	choose = _choose;
 	pRecs = new PTTabRecord[Size]; 
 	TabSize = Size; 
 	HashStep = Step;
@@ -21,7 +22,7 @@ int* TArrayHash::FindRecord(TKey k)
 {
 	int* pValue = NULL;
 	FreePos = -1;
-	CurrPos = HashFunc(k) % TabSize;
+	CurrPos = HashFunc(k, choose) % TabSize;
 	for (int i = 0; i < TabSize; i++)
 	{
 		Efficiency++;

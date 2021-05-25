@@ -13,11 +13,12 @@ protected:
 	int HashStep;
 	int FreePos;
 	int CurrPos;
+	int choose;
 	PTTabRecord pMark;
 
 	int GetNextPos(int pos) { return (pos + HashStep) % TabSize; }
 public:
-	TArrayHash(int Size = TabMaxSize, int Step = TabHashStep);
+	TArrayHash(int _choose, int Size = TabMaxSize, int Step = TabHashStep);
 	~TArrayHash();
 
 	virtual int IsFull() const { return DataCount >= TabSize; }

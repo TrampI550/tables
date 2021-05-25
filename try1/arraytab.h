@@ -2,14 +2,14 @@
 #include "ttable.h"
 #define TabMaxSize 25
 
-enum TDataPos { FIRST_POS, CURRENT_POS, LAST_POS };// тип позиции
+enum TDataPos { FIRST_POS, CURRENT_POS, LAST_POS };
 
 class TArrayTable : public TTable 
 {
 protected:
-	PTTabRecord* pRecs;// память для записей таблицы
-	int TabSize;// макс. возм.количество записей в таблице
-	int CurrPos;// номер текущей записи (нумерация с 0)
+	PTTabRecord* pRecs;
+	int TabSize;
+	int CurrPos;
 public:
 	TArrayTable(int Size = TabMaxSize)
 	{
@@ -26,13 +26,13 @@ public:
 				delete pRecs[i];
 		delete[] pRecs;
 	}
-	PTTabRecord GetpRecs (int n) const// получить запись
+	PTTabRecord GetpRecs (int n) const
 	{
 		if (n<DataCount)
 			return pRecs[n];
 		return NULL;
 	}
-	void FreepRecs()// очистить массив записей
+	void FreepRecs()
 	{
 		for (int i = 0; DataCount; i++)
 		{
@@ -40,11 +40,11 @@ public:
 			DataCount--;
 		}
 	}
-	virtual PTTabRecord* GetAllpRecs() const// получить массив записей
+	virtual PTTabRecord* GetAllpRecs() const
 	{
 		return pRecs;
 	}
-	TArrayTable(TArrayTable &oth)// конструктор копирования
+	TArrayTable(TArrayTable &oth)
 	{
 		pRecs = new PTTabRecord[oth.TabSize];
 		for (int i = 0; i < oth.TabSize; i++)
@@ -64,5 +64,5 @@ public:
 	virtual int GoNext(void);
 	virtual int SetCurrentPos(int pos);
 	int GetCurrentPos(void) const { return CurrPos; }
-	friend TSortTable;
+	//friend TSortTable;
 };
